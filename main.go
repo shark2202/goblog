@@ -1,11 +1,13 @@
 package main
 
 import (
-	_ "github.com/zd04/goblog/routers"
 	"github.com/astaxie/beego"
+	_ "github.com/zd04/goblog/routers"
 )
 
 func main() {
+
+	beego.AddAPPStartHook(startWsServer)
+
 	beego.Run()
 }
-
