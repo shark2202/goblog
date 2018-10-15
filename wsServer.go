@@ -38,19 +38,31 @@ func wsHandler(w http.ResponseWriter, r *http.Request) {
 		goto ERR
 	}
 
+	//开启读协程
+
+	//开启写协程
 	for {
 		//if err = conn.ReadJSON(&data); err != nil {
 		//	goto ERR
 		//}
-		if _, data, err = wsConn.ReadMessage(); err != nil {
+		//		if _, data, err = wsConn.ReadMessage(); err != nil {
+		//			goto ERR
+		//		}
+
+		//		logs.Debug(string(data))
+
+		//		if err = wsConn.WriteMessage(websocket.TextMessage, data); err != nil {
+		//			goto ERR
+		//		}
+
+		if data, err = conn.ReadMessage(); err != nil {
 			goto ERR
 		}
-
 		logs.Debug(string(data))
-
-		if err = wsConn.WriteMessage(websocket.TextMessage, data); err != nil {
+		if err = conn.WriteMessage(data); err != nil {
 			goto ERR
 		}
+
 	}
 
 ERR:
