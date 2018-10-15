@@ -26,6 +26,8 @@ func wsHandler(w http.ResponseWriter, r *http.Request) {
 		err  error
 		data []byte
 		//data interface{}
+
+		//uid string
 	)
 
 	if wsConn, err = upgrader.Upgrade(w, r, nil); err != nil {
@@ -58,8 +60,9 @@ func wsHandler(w http.ResponseWriter, r *http.Request) {
 		if data, err = conn.ReadMessage(); err != nil {
 			goto ERR
 		}
+
 		logs.Debug(string(data))
-		if err = conn.WriteMessage(data); err != nil {
+		if err = conn.Broadcast(data); err != nil {
 			goto ERR
 		}
 
@@ -84,4 +87,12 @@ func startWsServer() error {
 	}()
 
 	return nil
+}
+
+func main() {
+	logs.Debug("StartWsServer")
+
+	logs.Debug("on :7777")
+	http.HandleFunc("/ws", wsHandler)
+	http.ListenAndServe("0.0.0.0:7777", nil)
 }

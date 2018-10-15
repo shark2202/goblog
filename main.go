@@ -7,7 +7,7 @@ import (
 
 func main() {
 
-	beego.AddAPPStartHook(startWsServer)
+	//beego.AddAPPStartHook(startWsServer)
 
 	beego.Run()
 }
